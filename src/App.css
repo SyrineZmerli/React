@@ -1,0 +1,335 @@
+/* ============================================================
+   App.css – Séance 5 MERN : Compteur React avec useState & useEffect
+   ============================================================ */
+
+/* ---- Layout global ---- */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100svh;
+  padding-bottom: 60px;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+  max-width: 540px;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* ---- Header ---- */
+.header {
+  width: 100%;
+  padding: 32px 24px 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.header h1 {
+  margin-bottom: 6px;
+}
+
+/* ---- Counter Card ---- */
+.counter-card {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 28px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+/* ---- Counter Display ---- */
+.counter-display {
+  font-size: 80px;
+  font-weight: 700;
+  font-family: var(--mono);
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: -2px;
+  transition: color 0.3s, transform 0.1s;
+  min-width: 160px;
+  text-align: center;
+  padding: 12px 24px;
+  border-radius: 12px;
+  background: var(--accent-bg);
+  border: 2px solid var(--accent-border);
+}
+
+.counter-display.at-max {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.counter-display.positive {
+  color: #16a34a;
+  background: rgba(34, 197, 94, 0.12);
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+.counter-display.negative {
+  color: #dc2626;
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.counter-display.zero {
+  color: var(--accent);
+  background: var(--accent-bg);
+  border-color: var(--accent-border);
+}
+
+.step-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.step-control select {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  font-family: var(--mono);
+}
+
+.history-card {
+  width: 100%;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  text-align: left;
+}
+
+.counter-display.at-min {
+  color: #f97316;
+  background: rgba(249, 115, 22, 0.1);
+  border-color: rgba(249, 115, 22, 0.4);
+}
+
+/* ---- Alert Message (Défi 1) ---- */
+.alert-message {
+  width: 100%;
+  text-align: center;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #ef4444;
+  font-size: 14px;
+  font-weight: 500;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- Button Group ---- */
+.btn-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ---- Buttons ---- */
+.btn {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.btn:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+.btn:not(:disabled):active {
+  transform: translateY(0);
+}
+
+/* Increment – green */
+.btn-inc {
+  background: rgba(34, 197, 94, 0.15);
+  color: #16a34a;
+  border-color: rgba(34, 197, 94, 0.4);
+}
+.btn-inc:not(:disabled):hover {
+  background: rgba(34, 197, 94, 0.25);
+  border-color: #16a34a;
+}
+
+/* Decrement – red */
+.btn-dec {
+  background: rgba(239, 68, 68, 0.12);
+  color: #dc2626;
+  border-color: rgba(239, 68, 68, 0.35);
+}
+.btn-dec:not(:disabled):hover {
+  background: rgba(239, 68, 68, 0.22);
+  border-color: #dc2626;
+}
+
+/* Reset – neutral */
+.btn-reset {
+  background: var(--code-bg);
+  color: var(--text-h);
+  border-color: var(--border);
+}
+.btn-reset:hover {
+  border-color: var(--accent);
+}
+
+/* Toggle timer button */
+.btn-toggle {
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-color: var(--accent-border);
+  font-family: var(--sans);
+  font-size: 14px;
+  padding: 9px 18px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-toggle:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow);
+}
+
+/* ---- Keyboard Hint (Défi 3) ---- */
+.keyboard-hint {
+  font-size: 13px;
+  color: var(--text);
+  margin: 0;
+}
+
+kbd {
+  display: inline-block;
+  padding: 2px 7px;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.4;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.12);
+}
+
+/* ---- History Box (Défi 2) ---- */
+.history-box {
+  width: 100%;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+  text-align: left;
+}
+
+.history-box h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-h);
+  margin: 0 0 10px;
+  font-family: var(--mono);
+}
+
+.history-count {
+  color: var(--text);
+  font-weight: 400;
+}
+
+.history-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 180px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.history-box li {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text);
+  padding: 5px 10px;
+  background: var(--code-bg);
+  border-radius: 5px;
+}
+
+/* Scroll bar styling */
+.history-box ul::-webkit-scrollbar { width: 4px; }
+.history-box ul::-webkit-scrollbar-track { background: transparent; }
+.history-box ul::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* ---- Timer Section ---- */
+.timer-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.timer-box {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px 28px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  box-sizing: border-box;
+}
+
+.timer-box h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.timer-display {
+  font-family: var(--mono);
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: var(--accent);
+  line-height: 1;
+}
